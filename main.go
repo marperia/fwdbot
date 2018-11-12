@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"fwdbot/accounts"
-	"fwdbot/menu"
 	"github.com/Arman92/go-tdlib"
+	"github.com/marperia/fwdbot/accounts"
+	"github.com/marperia/fwdbot/menu"
 	"os"
 	"os/signal"
 )

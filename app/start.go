@@ -1,8 +1,8 @@
 package app
 
 import (
-	"fwdbot/accounts"
 	"github.com/Arman92/go-tdlib"
+	"github.com/marperia/fwdbot/accounts"
 	"time"
 )
 

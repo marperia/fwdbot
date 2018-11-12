@@ -3,9 +3,9 @@ package menu
 import (
 	"bufio"
 	"fmt"
-	"fwdbot/accounts"
-	"fwdbot/app"
-	"fwdbot/server"
+	"github.com/marperia/fwdbot/accounts"
+	"github.com/marperia/fwdbot/app"
+	"github.com/marperia/fwdbot/server"
 	"os"
 	"strings"
 )
