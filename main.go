@@ -29,16 +29,21 @@ func main() {
 	c := make(chan os.Signal, 2)
 	signal.Notify(c, os.Interrupt)
 
-	for _, acc := range accounts.TdInstances {
-
-		acc.LoginToTdlib()
-
-		// Handle Ctrl+C
-		go func(ac accounts.TdInstance) {
+	// Handle Ctrl+C
+	if len(accounts.TdInstances) > 0 {
+		for _, acc := range accounts.TdInstances {
+			acc.LoginToTdlib()
+			go func(ac accounts.TdInstance) {
+				<-c
+				ac.TdlibClient.DestroyInstance()
+				os.Exit(0)
+			}(acc)
+		}
+	} else {
+		go func() {
 			<-c
-			ac.TdlibClient.DestroyInstance()
-			os.Exit(42)
-		}(acc)
+			os.Exit(0)
+		}()
 	}
 
 	for {
