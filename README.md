@@ -8,9 +8,9 @@ These instructions will get you a copy of the project up and running on your loc
 
 What things you need to install the software and how to install them
 
-```
-$ docker build -t marperia/fwdbot:latest . 
-$ docker run -p 9000:9000 --name fwdbot marperia/fwdbot:latest
+```commandline
+docker build -t marperia/fwdbot:latest . 
+docker run -it -p 9000:9000 --name fwdbot marperia/fwdbot:latest
 ```
 
 

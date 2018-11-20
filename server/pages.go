@@ -42,10 +42,10 @@ func viewAllAccounts(w http.ResponseWriter, r *http.Request) {
 
 func viewChatList(w http.ResponseWriter, r *http.Request, name string) {
 	var chats []map[string]string
-	for _, acc := range accounts.TdInstances {
-		if acc.AccountName == name {
-			acc.LoginToTdlib()
-			chatList, err := accounts.GetAccountChatList(acc, 100)
+	for i := range accounts.TdInstances {
+		if accounts.TdInstances[i].AccountName == name {
+			accounts.TdInstances[i].LoginToTdlib()
+			chatList, err := accounts.GetAccountChatList(accounts.TdInstances[i], 100)
 			if err != nil {
 				fmt.Fprintf(w, err.Error())
 			}
@@ -99,8 +99,8 @@ func addAccountForm(w http.ResponseWriter, r *http.Request) {
 
 func addAccount(w http.ResponseWriter, r *http.Request, name string) {
 	// TODO: refactor this spaghetti-code
-	for _, ac := range accounts.TdInstances {
-		if ac.AccountName == name {
+	for i := range accounts.TdInstances {
+		if accounts.TdInstances[i].AccountName == name {
 			fmt.Fprintf(w, "Account already authorised")
 			return
 		}
@@ -217,11 +217,11 @@ func addAccount(w http.ResponseWriter, r *http.Request, name string) {
 			// Handle Ctrl+C
 			CtrlCChan := make(chan os.Signal, 2)
 			signal.Notify(CtrlCChan, os.Interrupt)
-			go func(ac accounts.TdInstance) {
+			go func(ac *accounts.TdInstance) {
 				<-CtrlCChan
 				ac.TdlibClient.DestroyInstance()
 				os.Exit(0)
-			}(account)
+			}(&account)
 			http.Redirect(w, r, "/accounts/", 303)
 			return
 		}

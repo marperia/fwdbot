@@ -75,6 +75,9 @@ func (tdInstance *TdInstance) LoginToTdlib() {
 			}
 		case tdlib.AuthorizationStateReadyType:
 			fmt.Println("Account", tdInstance.AccountName, "successfully authorized!")
+			if tdInstance.TdlibClient == nil {
+
+			}
 			// the only way to out this cycle
 			return
 		}
@@ -210,7 +213,6 @@ func GetAccounts() []string {
 }
 
 func CreateUpdateChannel(client *tdlib.Client) {
-	fmt.Println("Creating update channel")
 	rawUpdates := client.GetRawUpdatesChannel(100)
 	for update := range rawUpdates {
 		_ = update

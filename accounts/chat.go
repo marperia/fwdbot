@@ -66,13 +66,12 @@ func MessageFilter(msg *tdlib.TdMessage) bool {
 func NewMessageHandle(newMsg interface{}, acc TdInstance) {
 	updateMsg := (newMsg).(*tdlib.UpdateNewMessage)
 	c, _ := acc.TdlibClient.GetMe()
-	fmt.Println(c.PhoneNumber)
 	for _, con := range Configs {
 		if con.Account == string(c.PhoneNumber) {
 			forwards := con.Forwards
 			for _, forward := range forwards {
-				fmt.Println("Message ", updateMsg.Message.ID, " forwarded from ", updateMsg.Message.ChatID)
 				if updateMsg.Message.ChatID == forward.From {
+					fmt.Println(c.PhoneNumber, "- Message ", updateMsg.Message.ID, " forwarded from ", updateMsg.Message.ChatID)
 					for _, to := range forward.To {
 						acc.TdlibClient.ForwardMessages(to,
 							forward.From,

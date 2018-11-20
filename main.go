@@ -31,13 +31,13 @@ func main() {
 
 	// Handle Ctrl+C
 	if len(accounts.TdInstances) > 0 {
-		for _, acc := range accounts.TdInstances {
-			acc.LoginToTdlib()
-			go func(ac accounts.TdInstance) {
+		for i := range accounts.TdInstances {
+			accounts.TdInstances[i].LoginToTdlib()
+			go func() {
 				<-c
-				ac.TdlibClient.DestroyInstance()
+				accounts.TdInstances[i].TdlibClient.DestroyInstance()
 				os.Exit(0)
-			}(acc)
+			}()
 		}
 	} else {
 		go func() {
