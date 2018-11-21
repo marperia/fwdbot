@@ -75,9 +75,6 @@ func (tdInstance *TdInstance) LoginToTdlib() {
 			}
 		case tdlib.AuthorizationStateReadyType:
 			fmt.Println("Account", tdInstance.AccountName, "successfully authorized!")
-			if tdInstance.TdlibClient == nil {
-
-			}
 			// the only way to out this cycle
 			return
 		}

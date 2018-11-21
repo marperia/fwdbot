@@ -99,10 +99,12 @@ func addAccountForm(w http.ResponseWriter, r *http.Request) {
 
 func addAccount(w http.ResponseWriter, r *http.Request, name string) {
 	// TODO: refactor this spaghetti-code
-	for i := range accounts.TdInstances {
-		if accounts.TdInstances[i].AccountName == name {
-			fmt.Fprintf(w, "Account already authorised")
-			return
+	if len(accounts.TdInstances) > 0 {
+		for i := range accounts.TdInstances {
+			if accounts.TdInstances[i].AccountName == name {
+				fmt.Fprintf(w, "Account already authorised")
+				return
+			}
 		}
 	}
 
@@ -178,7 +180,7 @@ func addAccount(w http.ResponseWriter, r *http.Request, name string) {
 			data = "Enter your Password: "
 			if r.Method == "POST" {
 				r.ParseForm()
-				password := r.PostForm["code"][0]
+				password := r.PostForm["password"][0]
 				_, err := client.SendAuthPassword(password)
 				if err != nil {
 					fmt.Printf("Error sending auth password: %v\n", err)
